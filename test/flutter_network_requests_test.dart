@@ -4,17 +4,17 @@ import 'package:flutter_network_requests/flutter_network_requests.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-class MockNetworkRequests extends Mock implements NetworkRequests {}
+class MockNetworkRequests extends Mock implements NetworkRequestsAbstact {}
 
 class MockHttpClient extends Mock implements HttpClient {}
 
 void main() {
-  NetworkRequestsImp networkRequest;
+  NetworkRequests networkRequest;
   MockNetworkRequests mockNetworkRequests;
   final String _tag = "Network request test: ";
   setUp(() {
     mockNetworkRequests = MockNetworkRequests();
-    networkRequest = NetworkRequestsImp(
+    networkRequest = NetworkRequests(
         baseUrl: "https://www.google.com", client: MockHttpClient());
   });
 

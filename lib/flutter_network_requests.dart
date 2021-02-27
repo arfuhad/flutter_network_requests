@@ -8,13 +8,13 @@ import 'package:equatable/equatable.dart';
 part './src/errors/generic_failures.dart';
 part './src/errors/generic_execptions.dart';
 
-///[NetworkRequests] required "HttpClient" as client, "String" baseUrl
+///[NetworkRequestsAbstact] required "HttpClient" as client, "String" baseUrl
 ///additional variable "int" port, "String" additionalUrl,
 /// "bool" isBadCertificate (default "false",
 /// switch it "true" if server is not HTTPS / certificate is not good / not installed)
 ///
 
-abstract class NetworkRequests {
+abstract class NetworkRequestsAbstact {
   Future<String> getRequest(
       {@required String url,
       @required Map<String, String> headers,
@@ -25,13 +25,13 @@ abstract class NetworkRequests {
       @required Map<String, String> headers,
       bool isDirectUrl = false});
   Future<String> putRequest(
-      {@required String specificUrl,
+      {@required String url,
       @required String body,
       @required Map<String, String> headers,
       bool isDirectUrl = false});
 }
 
-class NetworkRequestsImp implements NetworkRequests {
+class NetworkRequests implements NetworkRequestsAbstact {
   final String baseUrl;
   final int port;
   final String additionalUrl;
@@ -40,7 +40,7 @@ class NetworkRequestsImp implements NetworkRequests {
 
   String _tag = "Flutter Network Requests: ";
 
-  NetworkRequestsImp(
+  NetworkRequests(
       {@required this.client,
       @required this.baseUrl,
       this.port,
@@ -69,7 +69,7 @@ class NetworkRequestsImp implements NetworkRequests {
   ///[getRequest] required "String" url, "Map<String, String>" headers,
   /// "bool" isDirectUrl (default "false",
   /// switch it "true" if url is direct url like as "https://www.google.com"
-  /// if "false" url will be append as initial "baseUrl" in [NetworkRequestsImp])
+  /// if "false" url will be append as initial "baseUrl" in [NetworkRequests])
   ///
   /// return response as "String"
   @override
@@ -98,7 +98,7 @@ class NetworkRequestsImp implements NetworkRequests {
   ///[postRequest] required "String" url, "Map<String, String>" headers, "String" body
   /// "bool" isDirectUrl (default "false",
   /// switch it "true" if url is direct url like as "https://www.google.com"
-  /// if "false" url will be append as initial "baseUrl" in [NetworkRequestsImp])
+  /// if "false" url will be append as initial "baseUrl" in [NetworkRequests])
   ///
   /// return response as "String"
   @override
@@ -129,12 +129,12 @@ class NetworkRequestsImp implements NetworkRequests {
   ///[putRequest] required "String" url, "Map<String, String>" headers, "String" body
   /// "bool" isDirectUrl (default "false",
   /// switch it "true" if url is direct url like as "https://www.google.com"
-  /// if "false" url will be append as initial "baseUrl" in [NetworkRequestsImp])
+  /// if "false" url will be append as initial "baseUrl" in [NetworkRequests])
   ///
   /// return response as "String"
   @override
   Future<String> putRequest(
-      {@required String specificUrl,
+      {@required String url,
       @required String body,
       @required Map<String, String> headers,
       bool isDirectUrl = false}) async {
@@ -142,7 +142,7 @@ class NetworkRequestsImp implements NetworkRequests {
     var responseJson;
     try {
       final request = await client
-          .putUrl(_getUri(specificUrl: specificUrl, isDirectUrl: isDirectUrl));
+          .putUrl(_getUri(specificUrl: url, isDirectUrl: isDirectUrl));
       headers.forEach((k, v) => request.headers.set(k, v));
       request.write(body);
       final response = await request.close();
