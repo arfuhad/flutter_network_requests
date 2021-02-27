@@ -1,7 +1,6 @@
 name: flutter_network_requests
 description: Network requests with exceptions and failures. Basic requests Get,Post,Pull.
 version: 0.0.1
-author: AR FUHAD <fuhad1987@gmail.com>
 homepage: https://github.com/arfuhad/flutter_network_requests
 
 environment:
