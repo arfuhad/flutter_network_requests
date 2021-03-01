@@ -4,9 +4,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 
 part './src/errors/generic_failures.dart';
 part './src/errors/generic_execptions.dart';
+part './src/network_info.dart';
 
 ///[NetworkRequestsAbstact] required "HttpClient" as client, "String" baseUrl
 ///additional variable "int" port, "String" additionalUrl,
